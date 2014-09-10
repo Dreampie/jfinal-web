@@ -1,4 +1,4 @@
-jfinal-slf4j
+jfinal-web
 ============
 
-jfinal  slf4j  log api
+jfinal  web  filter  and  handler
