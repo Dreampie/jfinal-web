@@ -1,6 +1,6 @@
 package cn.dreampie.web.render;
 
-import cn.dreampie.ThreadLocalUtils;
+import cn.dreampie.ThreadLocalKit;
 import com.jfinal.render.ErrorRender;
 import com.jfinal.render.IErrorRenderFactory;
 import com.jfinal.render.Render;
@@ -10,7 +10,7 @@ import com.jfinal.render.Render;
  */
 public class JsonErrorRenderFactory implements IErrorRenderFactory {
   public Render getRender(int errorCode, String view) {
-    if (ThreadLocalUtils.isJson())
+    if (ThreadLocalKit.isJson())
       return new JsonErrorRender(errorCode, view);
     else
       return new ErrorRender(errorCode, view);

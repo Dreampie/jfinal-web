@@ -1,6 +1,6 @@
 package cn.dreampie.web.handler;
 
-import cn.dreampie.ThreadLocalUtils;
+import cn.dreampie.ThreadLocalKit;
 import cn.dreampie.matcher.AntPathMatcher;
 import com.jfinal.handler.Handler;
 import com.jfinal.i18n.I18N;
@@ -19,7 +19,7 @@ public class FakeStaticHandler extends Handler {
   public void handle(String target, HttpServletRequest request, HttpServletResponse response, boolean[] isHandled) {
     target = target.replace(";JSESSIONID", "?JSESSIONID");
     //i18n不支持json
-    if (!ThreadLocalUtils.isJson())
+    if (!ThreadLocalKit.isJson())
       request.setAttribute("i18n", I18N.me());
 
     nextHandler.handle(target, request, response, isHandled);

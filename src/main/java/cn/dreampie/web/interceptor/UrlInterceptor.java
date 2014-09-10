@@ -1,6 +1,6 @@
 package cn.dreampie.web.interceptor;
 
-import cn.dreampie.ThreadLocalUtils;
+import cn.dreampie.ThreadLocalKit;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.core.ActionInvocation;
 import com.jfinal.core.Controller;
@@ -22,7 +22,7 @@ public class UrlInterceptor implements Interceptor {
 
     ai.invoke();
 
-    if (!ThreadLocalUtils.isJson(controller)) {
+    if (!ThreadLocalKit.isJson(controller)) {
       //local 数据
       controller.setAttr("_localParas", request.getQueryString());
       controller.setAttr("_localUri", ai.getActionKey());
