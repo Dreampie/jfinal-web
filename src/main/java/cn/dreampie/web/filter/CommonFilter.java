@@ -1,7 +1,5 @@
 package cn.dreampie.web.filter;
 
-import cn.dreampie.ThreadLocalKit;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

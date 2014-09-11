@@ -1,6 +1,7 @@
 package cn.dreampie.web.interceptor;
 
-import cn.dreampie.ThreadLocalKit;
+
+import cn.dreampie.web.filter.ThreadLocalKit;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.core.ActionInvocation;
 import com.jfinal.core.Controller;

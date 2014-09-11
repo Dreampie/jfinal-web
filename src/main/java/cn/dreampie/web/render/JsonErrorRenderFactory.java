@@ -1,6 +1,7 @@
 package cn.dreampie.web.render;
 
-import cn.dreampie.ThreadLocalKit;
+
+import cn.dreampie.web.filter.ThreadLocalKit;
 import com.jfinal.render.ErrorRender;
 import com.jfinal.render.IErrorRenderFactory;
 import com.jfinal.render.Render;
