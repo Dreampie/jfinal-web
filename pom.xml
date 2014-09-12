@@ -8,6 +8,7 @@
   <artifactId>jfinal-web</artifactId>
   <version>0.1</version>
   <packaging>jar</packaging>
+  <name>jfinal-web</name>
   <description>jfinal web plugins</description>
   <url>https://github.com/Dreampie/jfinal-web</url>
 
