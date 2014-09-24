@@ -46,6 +46,10 @@
     <project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
     <jfinal.version>1.8</jfinal.version>
     <jfinal-utils.version>0.1</jfinal-utils.version>
+    <!-- Java EE 7 -->
+    <javaee.api.version>7.0</javaee.api.version>
+
+    <fastjson.version>1.1.41</fastjson.version>
   </properties>
 
   <dependencies>
@@ -61,6 +65,20 @@
       <groupId>cn.dreampie</groupId>
       <artifactId>jfinal-utils</artifactId>
       <version>${jfinal-utils.version}</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>${javaee.api.version}</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>${fastjson.version}</version>
     </dependency>
   </dependencies>
 
