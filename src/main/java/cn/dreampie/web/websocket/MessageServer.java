@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
     value = "/im/{cid}",
     encoders = {MessageEncoder.class},
     decoders = {MessageDecoder.class},
-    configurator = MessageConfigurator.class
+    configurator = MessageServerConfigurator.class
 )
 public class MessageServer {
   private static final Logger logger = LoggerFactory.getLogger(MessageServer.class);
@@ -56,13 +56,12 @@ public class MessageServer {
 //      // We received a MessageB object...
 //    }
     if (msg != null) {
-      try {
-        session.getBasicRemote().sendObject(msg);
-      } catch (IOException e) {
-        logger.error(e.toString());
-      } catch (EncodeException e) {
-        logger.error(e.toString());
+      if (msg.getReceiver().equals("all")) {
+        sendAll(msg);
+      } else {
+        send(msg);
       }
+
     }
   }
 
@@ -71,8 +70,7 @@ public class MessageServer {
   public void error(Session session, Throwable t) {
     /* Remove this connection from the queue */
     removeSession(session);
-    logger.error(t.toString());
-    logger.error("Connection error.get error time {}", new Date());
+    logger.error("Connection error.get error {},get error time {}", t.toString(), new Date());
   }
 
   @OnClose
@@ -80,8 +78,7 @@ public class MessageServer {
                     CloseReason reason) {
      /* Remove this connection from the queue */
     removeSession(session);
-    logger.info(reason.toString());
-    logger.info("Connection closed.close time {}", new Date());
+    logger.info("Connection closed.close reson {},close time {}", reason.toString(), new Date());
   }
 
   public boolean removeSession(Session session) {

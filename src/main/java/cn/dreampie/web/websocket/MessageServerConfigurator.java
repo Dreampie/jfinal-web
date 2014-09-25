@@ -7,7 +7,7 @@ import javax.websocket.server.ServerEndpointConfig;
 /**
  * Created by ice on 14-9-17.
  */
-public class MessageConfigurator extends ServerEndpointConfig.Configurator {
+public class MessageServerConfigurator extends ServerEndpointConfig.Configurator {
 
   @Override
   public void modifyHandshake(ServerEndpointConfig conf,
