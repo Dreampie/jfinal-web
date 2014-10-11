@@ -1,5 +1,6 @@
 package cn.dreampie.web;
 
+import cn.dreampie.PropertiesKit;
 import com.jfinal.config.*;
 import com.jfinal.kit.PathKit;
 import com.jfinal.kit.StrKit;
@@ -61,51 +62,10 @@ public abstract class JFConfig extends com.jfinal.config.JFinalConfig {
    * Load property file
    * Example: loadPropertyFile("db_username_pass.txt");
    *
-   * @param file the file in WEB-INF directory
+   * @param file the file in WEB-INF directory  or resources
    */
   public Properties loadPropertyFile(String file) {
-    if (StrKit.isBlank(file))
-      throw new IllegalArgumentException("Parameter of file can not be blank");
-    if (file.contains(".."))
-      throw new IllegalArgumentException("Parameter of file can not contains \"..\"");
-
-    InputStream inputStream = null;
-    String fullFile;  // String fullFile = PathUtil.getWebRootPath() + file;
-    //判断是否带有文件分隔符
-    boolean startStuff = file.startsWith(File.separator);
-    if (startStuff)
-      fullFile = PathKit.getWebRootPath() + File.separator + "WEB-INF" + file;
-    else
-      fullFile = PathKit.getWebRootPath() + File.separator + "WEB-INF" + File.separator + file;
-    File propFile = new File(fullFile);
-    //判断文件是否存在WebInf
-    if (!propFile.exists()) {
-      if (startStuff)
-        fullFile = PathKit.getRootClassPath() + file;
-      else
-        fullFile = PathKit.getRootClassPath() + File.separator + file;
-      propFile = new File(fullFile);
-      //判断文件是否存在class
-      if (!propFile.exists()) {
-        throw new IllegalArgumentException("Properties file not found: " + fullFile);
-      }
-    }
-    try {
-      inputStream = new FileInputStream(propFile);
-      Properties p = new Properties();
-      p.load(inputStream);
-      properties = p;
-    } catch (IOException e) {
-      throw new IllegalArgumentException("Properties file can not be loading: " + fullFile);
-    } finally {
-      try {
-        if (inputStream != null) inputStream.close();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    }
-    if (properties == null)
-      throw new RuntimeException("Properties file loading failed: " + fullFile);
+    properties = PropertiesKit.me().loadPropertyFile(file);
     return properties;
   }
 
