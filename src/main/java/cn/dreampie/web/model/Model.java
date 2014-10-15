@@ -7,6 +7,7 @@ import com.jfinal.plugin.activerecord.TableMapping;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wangrenhui on 2014/7/1.
@@ -26,6 +27,10 @@ public abstract class Model<M extends Model> extends com.jfinal.plugin.activerec
   private String countSql;
 
   protected static String blank = " ";
+
+  public Map<String, Object> getAttrs() {
+    return super.getAttrs();
+  }
 
   public List<M> findAll() {
     return find(getSelectSql() + getExceptSelectSql());
