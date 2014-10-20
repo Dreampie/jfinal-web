@@ -80,14 +80,12 @@ public abstract class Model<M extends Model> extends com.jfinal.plugin.activerec
     return Db.update(getDropSql() + getWhere(where), paras) > 0;
   }
 
-  public long countAll() {
-    long result = Db.queryFirst(getCountSql());
-    return result;
+  public Long countAll() {
+    return Db.queryFirst(getCountSql());
   }
 
-  public long countBy(String where, Object... paras) {
-    long result = Db.queryFirst(getCountSql() + getWhere(where), paras);
-    return result;
+  public Long countBy(String where, Object... paras) {
+    return Db.queryFirst(getCountSql() + getWhere(where), paras);
   }
 
   protected String getSet(String set) {
