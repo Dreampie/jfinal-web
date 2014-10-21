@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by wangrenhui on 14-4-18.
  */
-public class CacheInterceptor implements Interceptor {
+public class CacheRemoveInterceptor implements Interceptor {
   private static final String SLASH = "/";
   private static final String QMARK = "?";
 
