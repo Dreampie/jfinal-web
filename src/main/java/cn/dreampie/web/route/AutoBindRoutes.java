@@ -85,32 +85,32 @@ public class AutoBindRoutes extends Routes {
   @SuppressWarnings({"rawtypes", "unchecked"})
   public void config() {
     List<Class<? extends Controller>> controllerClasses = ClassSearchKit.of(Controller.class).includepaths(includeClassPaths).search();
-    ControllerBind controllerBind = null;
+    ControllerKey controllerKey = null;
     for (Class controller : controllerClasses) {
       if (excludeClasses.contains(controller)) {
         continue;
       }
-      controllerBind = (ControllerBind) controller.getAnnotation(ControllerBind.class);
-      if (controllerBind == null) {
+      controllerKey = (ControllerKey) controller.getAnnotation(ControllerKey.class);
+      if (controllerKey == null) {
         if (!autoScan) {
           continue;
         }
         this.add(controllerKey(controller), controller);
         logger.debug("routes.add(" + controllerKey(controller) + ", " + controller.getName() + ")");
-      } else if (StrKit.isBlank(controllerBind.viewPath())) {
-        this.add(controllerBind.controllerKey(), controller);
-        logger.debug("routes.add(" + controllerBind.controllerKey() + ", " + controller.getName() + ")");
+      } else if (StrKit.isBlank(controllerKey.path())) {
+        this.add(controllerKey.value(), controller);
+        logger.debug("routes.add(" + controllerKey.value() + ", " + controller.getName() + ")");
       } else {
-        this.add(controllerBind.controllerKey(), controller, controllerBind.viewPath());
-        logger.debug("routes.add(" + controllerBind.controllerKey() + ", " + controller + ","
-            + controllerBind.viewPath() + ")");
+        this.add(controllerKey.value(), controller, controllerKey.path());
+        logger.debug("routes.add(" + controllerKey.value() + ", " + controller + ","
+            + controllerKey.path() + ")");
       }
     }
   }
 
   private String controllerKey(Class<Controller> clazz) {
     Preconditions.checkArgument(clazz.getSimpleName().endsWith(suffix),
-        " does not has a @ControllerBind annotation and it's name is not end with " + suffix);
+        " does not has a @ControllerKey annotation and it's name is not end with " + suffix);
     String simpleName = clazz.getSimpleName();
     String controllerKey = "/";
     if (!simpleName.equalsIgnoreCase(suffix)) {

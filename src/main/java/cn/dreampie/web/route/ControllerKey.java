@@ -17,11 +17,11 @@ package cn.dreampie.web.route;
 
 import java.lang.annotation.*;
 
-@Inherited
+//@Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE })
-public @interface ControllerBind {
-    String controllerKey();
+public @interface ControllerKey {
+    String value();
 
-    String viewPath() default "";
+    String path() default "";
 }
