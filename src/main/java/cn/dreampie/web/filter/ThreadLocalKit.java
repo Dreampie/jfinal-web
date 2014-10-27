@@ -18,6 +18,8 @@ public class ThreadLocalKit {
 
   private static String dataTypeＮame = "returnType";
 
+  private static ReTurnType reTurnType = ReTurnType.HTML;
+
   public static String getDataTypeＮame() {
     return dataTypeＮame;
   }
@@ -28,6 +30,7 @@ public class ThreadLocalKit {
 
   public static void init(HttpServletRequest request) {
     setRequest(request);
+    reTurnType = getReturnType(request);
   }
 
   public static HttpServletRequest getRequest() {
@@ -62,8 +65,7 @@ public class ThreadLocalKit {
    *
    * @return type
    */
-  public static ReTurnType returnType() {
-    HttpServletRequest request = getRequest();
+  public static ReTurnType getReturnType(HttpServletRequest request) {
     if (request != null) {
       String header = request.getHeader("X-Requested-With");
       if ((("XMLHttpRequest").equalsIgnoreCase(header) && !("html").equalsIgnoreCase(request.getParameter(dataTypeＮame))) ||
@@ -76,7 +78,10 @@ public class ThreadLocalKit {
 
   public static boolean isAjax() {
     HttpServletRequest request = getRequest();
+    return isAjax(request);
+  }
 
+  public static boolean isAjax(HttpServletRequest request) {
     if (request != null && ("XMLHttpRequest").equalsIgnoreCase(request.getHeader("X-Requested-With"))) {
       return true;
     }
@@ -84,7 +89,7 @@ public class ThreadLocalKit {
   }
 
   public static boolean isJson() {
-    if (returnType() == ReTurnType.JSON) {
+    if (reTurnType == ReTurnType.JSON) {
       return true;
     }
     return false;
