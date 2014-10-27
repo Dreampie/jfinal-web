@@ -1,6 +1,7 @@
 package cn.dreampie.web.filter;
 
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,7 +10,22 @@ import java.io.IOException;
 /**
  * Created by wangrenhui on 13-12-31.
  */
-public class CommonFilter extends HttpFilter {
+public class ThreadLocalFilter extends HttpFilter {
+
+  /**
+   * 初始化filter，获取过滤例外参数
+   *
+   * @param filterConfig filterConfig
+   * @throws ServletException ServletException
+   */
+  public void init(FilterConfig filterConfig) throws ServletException {
+    FilterConfig config = filterConfig;
+    String dataTypeName = filterConfig.getInitParameter("dataTypeName");
+    if (dataTypeName != null && !dataTypeName.isEmpty()) {
+      ThreadLocalKit.setDataTypeＮame(dataTypeName);
+    }
+  }
+
   /**
    * 过滤字符和数据本地化存储
    *

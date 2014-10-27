@@ -16,6 +16,16 @@ public class ThreadLocalKit {
   // request线程对象
   private static ThreadLocal<HttpServletRequest> requestLocal = new ThreadLocal<HttpServletRequest>();
 
+  private static String dataTypeＮame = "returnType";
+
+  public static String getDataTypeＮame() {
+    return dataTypeＮame;
+  }
+
+  public static void setDataTypeＮame(String dataTypeＮame) {
+    ThreadLocalKit.dataTypeＮame = dataTypeＮame;
+  }
+
   public static void init(HttpServletRequest request) {
     setRequest(request);
   }
@@ -56,12 +66,12 @@ public class ThreadLocalKit {
     HttpServletRequest request = getRequest();
     if (request != null) {
       String header = request.getHeader("X-Requested-With");
-      if ((("XMLHttpRequest").equalsIgnoreCase(header) ||
-          ("json").equalsIgnoreCase(request.getParameter("returnType")))) {// 如果是ajax请求响应头会有，x-requested-with；
+      if ((("XMLHttpRequest").equalsIgnoreCase(header) && !("html").equalsIgnoreCase(request.getParameter(dataTypeＮame))) ||
+          ("json").equalsIgnoreCase(request.getParameter(dataTypeＮame))) {// 如果是ajax请求响应头会有，x-requested-with；
         return ReTurnType.JSON;
       }
     }
-    return ReTurnType.PAGE;
+    return ReTurnType.HTML;
   }
 
   public static boolean isAjax() {
@@ -88,7 +98,7 @@ public class ThreadLocalKit {
   }
 
   public enum ReTurnType {
-    PAGE(0), JSON(1);
+    HTML(0), JSON(1);
     private final int value;
 
     private ReTurnType(int value) {
