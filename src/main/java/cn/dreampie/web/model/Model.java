@@ -20,7 +20,7 @@ public abstract class Model<M extends Model> extends com.jfinal.plugin.activerec
   private String modelName;
 
   private String selectSql;
-  private String exceptSelectSql;
+  private String fromSql;
   private String updateSql;
   private String deleteSql;
   private String dropSql;
@@ -33,27 +33,27 @@ public abstract class Model<M extends Model> extends com.jfinal.plugin.activerec
   }
 
   public List<M> findAll() {
-    return find(getSelectSql() + getExceptSelectSql());
+    return find(getSelectSql() + getFromSql());
   }
 
   public List<M> findBy(String where, Object... paras) {
-    return find(getSelectSql() + getExceptSelectSql() + getWhere(where), paras);
+    return find(getSelectSql() + getFromSql() + getWhere(where), paras);
   }
 
   public List<M> findTopBy(int topNumber, String where, Object... paras) {
-    return paginate(1, topNumber, getSelectSql(), getExceptSelectSql() + getWhere(where), paras).getList();
+    return paginate(1, topNumber, getSelectSql(), getFromSql() + getWhere(where), paras).getList();
   }
 
   public M findFirstBy(String where, Object... paras) {
-    return findFirst(getSelectSql() + getExceptSelectSql() + getWhere(where), paras);
+    return findFirst(getSelectSql() + getFromSql() + getWhere(where), paras);
   }
 
   public Page<M> paginateAll(int pageNumber, int pageSize) {
-    return paginate(pageNumber, pageSize, getSelectSql(), getExceptSelectSql());
+    return paginate(pageNumber, pageSize, getSelectSql(), getFromSql());
   }
 
   public Page<M> paginateBy(int pageNumber, int pageSize, String where, Object... paras) {
-    return paginate(pageNumber, pageSize, getSelectSql(), getExceptSelectSql() + getWhere(where), paras);
+    return paginate(pageNumber, pageSize, getSelectSql(), getFromSql() + getWhere(where), paras);
   }
 
   public boolean updateAll(String set, Object... paras) {
@@ -141,11 +141,11 @@ public abstract class Model<M extends Model> extends com.jfinal.plugin.activerec
     return selectSql;
   }
 
-  public String getExceptSelectSql() {
-    if (exceptSelectSql == null) {
-      exceptSelectSql = " FROM " + getTableName() + " `" + getModelName() + "` ";
+  public String getFromSql() {
+    if (fromSql == null) {
+      fromSql = " FROM " + getTableName() + " `" + getModelName() + "` ";
     }
-    return exceptSelectSql;
+    return fromSql;
   }
 
   public String getUpdateSql() {
