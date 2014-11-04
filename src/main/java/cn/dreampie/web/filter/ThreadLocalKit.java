@@ -31,6 +31,7 @@ public class ThreadLocalKit {
   public static void init(HttpServletRequest request) {
     setRequest(request);
     reTurnType = getReturnType(request);
+    logger.debug(request.getRequestURI() + ":" + reTurnType);
   }
 
   public static HttpServletRequest getRequest() {
