@@ -20,8 +20,8 @@ public class FakeStaticHandler extends Handler {
   public void handle(String target, HttpServletRequest request, HttpServletResponse response, boolean[] isHandled) {
     target = target.replace(";JSESSIONID", "?JSESSIONID");
     //i18n不支持json
-    if (!ThreadLocalKit.isJson())
-      request.setAttribute("i18n", I18N.me());
+//    if (!ThreadLocalKit.isJson())
+//      request.setAttribute("i18n", I18N.me());
 
     nextHandler.handle(target, request, response, isHandled);
   }
