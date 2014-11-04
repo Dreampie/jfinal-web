@@ -18,7 +18,7 @@ public class ThreadLocalKit {
 
   private static String dataTypeＮame = "returnType";
 
-  private static ReTurnType reTurnType = ReTurnType.HTML;
+  private static ReTurnType reTurnType = ReTurnType.DFAULT;
 
   public static String getDataTypeＮame() {
     return dataTypeＮame;
@@ -69,12 +69,12 @@ public class ThreadLocalKit {
   public static ReTurnType getReturnType(HttpServletRequest request) {
     if (request != null) {
       String header = request.getHeader("X-Requested-With");
-      if ((("XMLHttpRequest").equalsIgnoreCase(header) && !("html").equalsIgnoreCase(request.getParameter(dataTypeＮame))) ||
+      if ((("XMLHttpRequest").equalsIgnoreCase(header) && !("default").equalsIgnoreCase(request.getParameter(dataTypeＮame))) ||
           ("json").equalsIgnoreCase(request.getParameter(dataTypeＮame))) {// 如果是ajax请求响应头会有，x-requested-with；
         return ReTurnType.JSON;
       }
     }
-    return ReTurnType.HTML;
+    return ReTurnType.DFAULT;
   }
 
   public static boolean isAjax() {
@@ -104,7 +104,7 @@ public class ThreadLocalKit {
   }
 
   public enum ReTurnType {
-    HTML(0), JSON(1);
+    DFAULT(0), JSON(1);
     private final int value;
 
     private ReTurnType(int value) {
