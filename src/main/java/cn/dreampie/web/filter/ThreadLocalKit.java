@@ -15,27 +15,25 @@ public class ThreadLocalKit {
   protected static final Logger logger = Logger.getLogger(ThreadLocalKit.class);
   // request线程对象
   private static ThreadLocal<HttpServletRequest> requestLocal = new ThreadLocal<HttpServletRequest>();
+  private static ThreadLocal<ReTurnType> returnTypeLocal = new ThreadLocal<ReTurnType>();
 
-  private static String dataTypeＮame = "returnType";
+  private static String dataTypeName = "returnType";
 
-  private static ReTurnType reTurnType = ReTurnType.DFAULT;
-
-  public static String getDataTypeＮame() {
-    return dataTypeＮame;
+  public static String getDataTypeName() {
+    return dataTypeName;
   }
 
-  public static void setDataTypeＮame(String dataTypeＮame) {
-    ThreadLocalKit.dataTypeＮame = dataTypeＮame;
+  public static void setDataTypeName(String dataTypeＮame) {
+    ThreadLocalKit.dataTypeName = dataTypeＮame;
   }
 
   public static void init(HttpServletRequest request) {
     setRequest(request);
-    reTurnType = getReturnType(request);
-    logger.debug(request.getRequestURI() + ":" + reTurnType);
+    setReturnType(request);
   }
 
   public static HttpServletRequest getRequest() {
-    return (HttpServletRequest) requestLocal.get();
+    return requestLocal.get();
   }
 
   public static void setRequest(HttpServletRequest request) {
@@ -45,17 +43,15 @@ public class ThreadLocalKit {
 
   public static HttpSession getSession() {
     if (requestLocal.get() != null) {
-      return (HttpSession) ((HttpServletRequest) requestLocal.get())
-          .getSession();
+      return requestLocal.get().getSession();
     } else {
       return null;
     }
   }
 
-  public static ServletContext getServletContex() {
+  public static ServletContext getServletContext() {
     if (requestLocal.get() != null) {
-      return (ServletContext) ((HttpServletRequest) requestLocal.get())
-          .getServletContext();
+      return requestLocal.get().getServletContext();
     } else {
       return null;
     }
@@ -66,41 +62,39 @@ public class ThreadLocalKit {
    *
    * @return type
    */
-  public static ReTurnType getReturnType(HttpServletRequest request) {
-    if (request != null) {
-      String header = request.getHeader("X-Requested-With");
-      if ((("XMLHttpRequest").equalsIgnoreCase(header) && !("default").equalsIgnoreCase(request.getParameter(dataTypeＮame))) ||
-          ("json").equalsIgnoreCase(request.getParameter(dataTypeＮame))) {// 如果是ajax请求响应头会有，x-requested-with；
-        return ReTurnType.JSON;
-      }
+  public static void setReturnType(HttpServletRequest request) {
+    if (isJson(request)) {
+      logger.debug("uri:" + request.getRequestURI() + ",return:json");
+      returnTypeLocal.set(ReTurnType.JSON);
+    } else {
+      logger.debug("uri:" + request.getRequestURI() + ",return:default");
+      returnTypeLocal.set(ReTurnType.DFAULT);
     }
-    return ReTurnType.DFAULT;
+  }
+
+  public static ReTurnType getReturnType() {
+    return returnTypeLocal.get();
   }
 
   public static boolean isAjax() {
-    HttpServletRequest request = getRequest();
-    return isAjax(request);
+    return isAjax(getRequest());
   }
 
   public static boolean isAjax(HttpServletRequest request) {
-    if (request != null && ("XMLHttpRequest").equalsIgnoreCase(request.getHeader("X-Requested-With"))) {
-      return true;
-    }
-    return false;
+    return ("XMLHttpRequest").equalsIgnoreCase(request.getHeader("X-Requested-With"));// 如果是ajax请求响应头会有，x-requested-with；
+  }
+
+  public static boolean isJson(HttpServletRequest request) {
+    return (isAjax(request) && !("default").equalsIgnoreCase(request.getParameter(dataTypeName))) ||
+        ("json").equalsIgnoreCase(request.getParameter(dataTypeName));// 如果是ajax请求响应头会有，x-requested-with；
   }
 
   public static boolean isJson() {
-    if (reTurnType == ReTurnType.JSON) {
-      return true;
-    }
-    return false;
+    return getReturnType() == ReTurnType.JSON;
   }
 
   public static boolean isJson(Controller controller) {
-    if (controller.getRender() instanceof JsonRender) {
-      return true;
-    }
-    return false;
+    return controller.getRender() instanceof JsonRender;
   }
 
   public enum ReTurnType {
