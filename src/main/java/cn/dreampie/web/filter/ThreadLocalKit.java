@@ -16,7 +16,7 @@ public class ThreadLocalKit {
   // request线程对象
   private static ThreadLocal<HttpServletRequest> requestLocal = new ThreadLocal<HttpServletRequest>();
   private static ThreadLocal<ReTurnType> returnTypeLocal = new ThreadLocal<ReTurnType>();
-  public static ThreadLocal<Boolean> isApplyLocal = new ThreadLocal<Boolean>();
+  private static ThreadLocal<Boolean> autoJsonLocal = new ThreadLocal<Boolean>();
 
   private static String dataTypeName = "returnType";
 
@@ -31,11 +31,17 @@ public class ThreadLocalKit {
   public static void init(HttpServletRequest request) {
     setRequest(request);
     setReturnType(request);
-    isApplyLocal.set(true);
+    autoJsonLocal.set(true);
   }
 
-  public static boolean isApply() {
-    return isApplyLocal.get().booleanValue();
+  public static void init(HttpServletRequest request, boolean autoJson) {
+    setRequest(request);
+    setReturnType(request);
+    autoJsonLocal.set(autoJson);
+  }
+
+  public static boolean autoJson() {
+    return autoJsonLocal.get().booleanValue();
   }
 
   public static HttpServletRequest getRequest() {

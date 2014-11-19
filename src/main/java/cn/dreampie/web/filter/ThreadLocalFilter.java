@@ -13,6 +13,7 @@ import java.util.List;
  * Created by wangrenhui on 13-12-31.
  */
 public class ThreadLocalFilter extends HttpFilter {
+  private boolean autoJson = true;
   private List<String> excludes = new ArrayList<String>() {
     {
       add("*.js");
@@ -42,6 +43,7 @@ public class ThreadLocalFilter extends HttpFilter {
         excludes.add(a.trim());
       }
     }
+    this.autoJson = Boolean.valueOf(config.getInitParameter("autoJson"));
   }
 
   /**
@@ -81,7 +83,7 @@ public class ThreadLocalFilter extends HttpFilter {
     }
     if (!excluding) {
       //请求数据本地化
-      ThreadLocalKit.init(request);
+      ThreadLocalKit.init(request, autoJson);
     }
     chain.doFilter(request, response);
   }

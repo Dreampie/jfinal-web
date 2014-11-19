@@ -2,6 +2,7 @@ package cn.dreampie.web;
 
 import cn.dreampie.web.filter.ThreadLocalKit;
 import com.jfinal.kit.StrKit;
+import com.jfinal.render.JsonRender;
 import com.jfinal.render.Render;
 import com.jfinal.render.RenderFactory;
 
@@ -17,8 +18,8 @@ public class JFController extends com.jfinal.core.Controller {
   protected static RenderFactory renderFactory = RenderFactory.me();
 
   public Render getRender() {
-    if (ThreadLocalKit.isApply()) {
-      if (ThreadLocalKit.isJson()) {
+    if (ThreadLocalKit.autoJson()) {
+      if (ThreadLocalKit.isJson() && !(super.getRender() instanceof JsonRender)) {
         return renderFactory.getJsonRender();
       }
     }
