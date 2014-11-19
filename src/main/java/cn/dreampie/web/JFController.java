@@ -18,8 +18,8 @@ public class JFController extends com.jfinal.core.Controller {
   protected static RenderFactory renderFactory = RenderFactory.me();
 
   public Render getRender() {
-    if (ThreadLocalKit.autoJson()) {
-      if (ThreadLocalKit.isJson() && !(super.getRender() instanceof JsonRender)) {
+    if (ThreadLocalKit.autoJson) {
+      if (ThreadLocalKit.isJson(getRequest()) && !(super.getRender() instanceof JsonRender)) {
         return renderFactory.getJsonRender();
       }
     }
