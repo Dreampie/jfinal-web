@@ -1,8 +1,7 @@
 package cn.dreampie.web.filter;
 
-import com.jfinal.core.Controller;
+import cn.dreampie.web.ReturnKit;
 import com.jfinal.log.Logger;
-import com.jfinal.render.JsonRender;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +14,7 @@ public class ThreadLocalKit {
   protected static final Logger logger = Logger.getLogger(ThreadLocalKit.class);
   // request线程对象
   private static ThreadLocal<HttpServletRequest> requestLocal = new ThreadLocal<HttpServletRequest>();
-  private static ThreadLocal<ReTurnType> returnTypeLocal = new ThreadLocal<ReTurnType>();
+  private static ThreadLocal<ReturnKit.ReturnType> returnTypeLocal = new ThreadLocal<ReturnKit.ReturnType>();
   public static boolean autoJson = true;
 
   private static String dataTypeName = "returnType";
@@ -70,56 +69,26 @@ public class ThreadLocalKit {
    * @return type
    */
   public static void setReturnType(HttpServletRequest request) {
-    if (isJson(request)) {
+    if (ReturnKit.isJson(request)) {
       logger.debug("uri:" + request.getRequestURI() + ",return:json");
-      returnTypeLocal.set(ReTurnType.JSON);
+      returnTypeLocal.set(ReturnKit.ReturnType.JSON);
     } else {
       logger.debug("uri:" + request.getRequestURI() + ",return:default");
-      returnTypeLocal.set(ReTurnType.DFAULT);
+      returnTypeLocal.set(ReturnKit.ReturnType.DFAULT);
     }
   }
 
-  public static ReTurnType getReturnType() {
+  public static ReturnKit.ReturnType getReturnType() {
     return returnTypeLocal.get();
   }
 
-  public static boolean isAjax() {
-    return isAjax(getRequest());
-  }
-
-  public static boolean isAjax(HttpServletRequest request) {
-    return ("XMLHttpRequest").equalsIgnoreCase(request.getHeader("X-Requested-With"));// 如果是ajax请求响应头会有，x-requested-with；
-  }
-
-  public static boolean isJson(HttpServletRequest request) {
-    return (isAjax(request) && !("default").equalsIgnoreCase(request.getParameter(dataTypeName))) ||
-        ("json").equalsIgnoreCase(request.getParameter(dataTypeName));// 如果是ajax请求响应头会有，x-requested-with；
-  }
-
   public static boolean isJson() {
-    return getReturnType() == ReTurnType.JSON;
-  }
-
-  public static boolean isJson(Controller controller) {
-    return controller.getRender() instanceof JsonRender;
+    return getReturnType() == ReturnKit.ReturnType.JSON;
   }
 
   public static void remove() {
     requestLocal.remove();
     returnTypeLocal.remove();
     logger.debug("remove  threadlocal");
-  }
-
-  public enum ReTurnType {
-    DFAULT(0), JSON(1);
-    private final int value;
-
-    private ReTurnType(int value) {
-      this.value = value;
-    }
-
-    public int value() {
-      return this.value;
-    }
   }
 }

@@ -86,6 +86,6 @@ public class ThreadLocalFilter extends HttpFilter {
       ThreadLocalKit.init(request, autoJson);
     }
     chain.doFilter(request, response);
-    ThreadLocalKit.remove();
+//    ThreadLocalKit.remove();
   }
 }
