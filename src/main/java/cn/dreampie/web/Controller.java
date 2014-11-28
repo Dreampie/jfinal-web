@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by ice on 14-11-19.
  */
-public class JFController extends com.jfinal.core.Controller {
+public class Controller extends com.jfinal.core.Controller {
 
   protected static RenderFactory renderFactory = RenderFactory.me();
 

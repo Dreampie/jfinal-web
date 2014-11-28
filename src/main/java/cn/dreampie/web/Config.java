@@ -8,7 +8,7 @@ import java.util.Properties;
 /**
  * Created by wangrenhui on 14-1-3.
  */
-public abstract class JFConfig extends com.jfinal.config.JFinalConfig {
+public abstract class Config extends com.jfinal.config.JFinalConfig {
   /**
    * Config constant
    */

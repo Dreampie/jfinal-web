@@ -150,7 +150,8 @@ public class HttpServletRequestWrapper extends javax.servlet.http.HttpServletReq
     if (text == null) {
       return text;
     } else {
-      value = StringEscapeUtils.escapeXml(value);
+      value = StringEscapeUtils.escapeXml10(value);
+      value = StringEscapeUtils.escapeXml11(value);
     }
     return value;
   }
