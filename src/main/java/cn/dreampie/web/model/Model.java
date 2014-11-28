@@ -1,5 +1,6 @@
 package cn.dreampie.web.model;
 
+import com.jfinal.kit.JsonKit;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Table;
@@ -30,6 +31,10 @@ public abstract class Model<M extends Model> extends com.jfinal.plugin.activerec
 
   public Map<String, Object> getAttrs() {
     return super.getAttrs();
+  }
+
+  public String getJson() {
+    return JsonKit.toJson(this);
   }
 
   public List<M> findAll() {
