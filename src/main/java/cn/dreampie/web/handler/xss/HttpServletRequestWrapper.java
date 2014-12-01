@@ -82,7 +82,6 @@ public class HttpServletRequestWrapper extends javax.servlet.http.HttpServletReq
       return text;
     } else {
       value = escapeString(value);
-      value = escapeFile(value);
     }
     return value;
   }
@@ -94,21 +93,11 @@ public class HttpServletRequestWrapper extends javax.servlet.http.HttpServletReq
       return text;
     } else {
       value = escapeHtml(value);
+      value = escapeScript(value);
     }
     return value;
   }
 
-  public String escapeFile(String text) {
-
-    String value = text;
-    if (text == null) {
-      return text;
-    } else {
-      value = escapeCsv(value);
-      value = escapeXml(value);
-    }
-    return value;
-  }
 
   public String escapeHtml(String text) {
 
@@ -132,28 +121,39 @@ public class HttpServletRequestWrapper extends javax.servlet.http.HttpServletReq
     }
     return value;
   }
-
-  public String escapeCsv(String text) {
-
-    String value = text;
-    if (text == null) {
-      return text;
-    } else {
-      value = StringEscapeUtils.escapeCsv(value);
-    }
-    return value;
-  }
-
-  public String escapeXml(String text) {
-
-    String value = text;
-    if (text == null) {
-      return text;
-    } else {
-      value = StringEscapeUtils.escapeXml10(value);
-      value = StringEscapeUtils.escapeXml11(value);
-    }
-    return value;
-  }
+//  public String escapeFile(String text) {
+//
+//    String value = text;
+//    if (text == null) {
+//      return text;
+//    } else {
+//      value = escapeCsv(value);
+//      value = escapeXml(value);
+//    }
+//    return value;
+//  }
+//
+//  public String escapeCsv(String text) {
+//
+//    String value = text;
+//    if (text == null) {
+//      return text;
+//    } else {
+//      value = StringEscapeUtils.escapeCsv(value);
+//    }
+//    return value;
+//  }
+//
+//  public String escapeXml(String text) {
+//
+//    String value = text;
+//    if (text == null) {
+//      return text;
+//    } else {
+//      value = StringEscapeUtils.escapeXml10(value);
+//      value = StringEscapeUtils.escapeXml11(value);
+//    }
+//    return value;
+//  }
 
 }
