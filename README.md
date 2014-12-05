@@ -7,9 +7,9 @@ maven 引用  ${jfinal-web.version}替换为相应的版本如:0.2
 
 ```xml
 <dependency>
-<groupId>cn.dreampie</groupId>
-<artifactId>jfinal-web</artifactId>
-<version>${jfinal-web.version}</version>
+  <groupId>cn.dreampie</groupId>
+  <artifactId>jfinal-web</artifactId>
+  <version>${jfinal-web.version}</version>
 </dependency>
 ```
 
