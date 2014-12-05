@@ -44,7 +44,7 @@
   <properties>
     <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
-    <jfinal.version>1.8</jfinal.version>
+    <jfinal.version>1.9</jfinal.version>
     <jfinal-utils.version>0.1</jfinal-utils.version>
     <servlet.version>3.1.0</servlet.version>
   </properties>
