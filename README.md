@@ -15,6 +15,14 @@ maven 引用  ${jfinal-web.version}替换为相应的版本如:0.2
 
 支持getModels的的Controller，支持根据ajax返回JsonRender，可以通过returnType=json使后台返回json数据，returnType=default返回action的默认render
 
+获取对象数组
+```html
+
+<input type="text" name="model[0].name" value="0"/>
+<input type="text" name="model[1].name" value="1"/>
+<input type="text" name="model[2].name" value="2"/>
+
+```
 ```java
 class MyController  extends cn.dreampie.web.Controller{
 
