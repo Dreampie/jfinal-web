@@ -74,7 +74,12 @@ public abstract class Model<M extends Model> extends com.jfinal.plugin.activerec
   }
 
   public boolean deleteBy(String where, Object... paras) {
-    return Db.update(getDeleteSql() + getWhere(where), new Date(), paras) > 0;
+    Object[] realParas = new Object[paras.length + 1];
+    realParas[0] = new Date();
+    for (int i = 0; i < paras.length; i++) {
+      realParas[i + 1] = paras[i];
+    }
+    return Db.update(getDeleteSql() + getWhere(where), realParas) > 0;
   }
 
   public boolean dropAll() {
