@@ -70,11 +70,11 @@ public abstract class Model<M extends Model> extends com.jfinal.plugin.activerec
   }
 
   public boolean deleteAll() {
-    return Db.update(getDeleteSql()) > 0;
+    return Db.update(getDeleteSql(), new Date()) > 0;
   }
 
   public boolean deleteBy(String where, Object... paras) {
-    return Db.update(getDeleteSql() + getWhere(where), paras) > 0;
+    return Db.update(getDeleteSql() + getWhere(where), new Date(), paras) > 0;
   }
 
   public boolean dropAll() {
@@ -162,7 +162,7 @@ public abstract class Model<M extends Model> extends com.jfinal.plugin.activerec
 
   public String getDeleteSql() {
     if (deleteSql == null) {
-      deleteSql = " UPDATE " + getTableName() + " `" + getModelName() + "` SET `" + getModelName() + "`.deleted_at='" + new Date() + "' ";
+      deleteSql = " UPDATE " + getTableName() + " `" + getModelName() + "` SET `" + getModelName() + "`.deleted_at=? ";
     }
     return deleteSql;
   }
